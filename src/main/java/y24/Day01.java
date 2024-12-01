@@ -1,5 +1,6 @@
 package main.java.y24;
 
+import main.java.AdventDay;
 import main.java.InputReader;
 
 import java.util.ArrayList;
@@ -8,26 +9,30 @@ import java.util.stream.IntStream;
 
 public class Day01 {
     public static void main(String[] args) {
-        List<Integer> left = new ArrayList<>();
-        List<Integer> right = new ArrayList<>();
+        var adventDay = new AdventDay<Integer>(2024, 1);
 
-        var reader = new InputReader(2024, 1);
-        final String[] inputLines = reader.getInputLines();
+        adventDay.doAnswer(1, () -> {
+            List<Integer> left = new ArrayList<>();
+            List<Integer> right = new ArrayList<>();
 
-        for (String line : inputLines) {
-            var lineArray = line.trim().split(" {3}");
+            final String[] inputLines = adventDay.getInputLines();
 
-            left.add(Integer.decode(lineArray[0]));
-            right.add(Integer.decode(lineArray[1]));
-        }
+            for (String line : inputLines) {
+                var lineArray = line.trim().split(" {3}");
+                left.add(Integer.decode(lineArray[0]));
+                right.add(Integer.decode(lineArray[1]));
+            }
 
-        final List<Integer> leftSorted = left.stream().sorted().toList();
-        final List<Integer> rightSorted = right.stream().sorted().toList();
+            final List<Integer> leftSorted = left.stream().sorted().toList();
+            final List<Integer> rightSorted = right.stream().sorted().toList();
 
-        int sum = IntStream.range(0, left.size())
-                .map(i -> Math.abs(rightSorted.get(i) - leftSorted.get(i)))
-                .sum();
+            return IntStream.range(0, left.size())
+                    .map(i -> Math.abs(rightSorted.get(i) - leftSorted.get(i)))
+                    .sum();
+        });
 
-        System.out.println("Answer: " + sum);
+        adventDay.doAnswer(2, () -> {
+            return 5;
+        });
     }
 }
