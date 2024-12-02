@@ -2,12 +2,12 @@ package main.java.y24;
 
 import main.java.AdventDay;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.IntStream;
-import java.util.stream.LongStream;
 
 public class Day01 {
+
     public static void main(String[] args) {
         var adventDay = new AdventDay<Long>(2024, 1, /* Use test file */ true);
 
@@ -24,13 +24,13 @@ public class Day01 {
             right.add(Long.decode(linePair[1]));
         }
 
-        // We know that each list is of the same size
-        int size = left.size();
-
         /* Day 1, part 1 */
         adventDay.doAnswer(1, () -> {
             final List<Long> leftSorted = left.stream().sorted().toList();
             final List<Long> rightSorted = right.stream().sorted().toList();
+
+            // We know that each list is of the same size
+            int size = left.size();
 
             return IntStream.range(0, size)
                     .mapToLong(i -> Math.abs(rightSorted.get(i) - leftSorted.get(i)))
