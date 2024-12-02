@@ -1,13 +1,19 @@
 package main.java;
 
+/**
+ * Represents a year, day, and optional challenge part
+ */
 public class AdventDate {
-    private int year;
-    private int day;
+    private final int year;
+    private final int day;
     private int part;
 
-    public AdventDate(int year, int day, int part) {
+    public AdventDate(int year, int day) {
         this.year = year;
         this.day = day;
+    }
+
+    public void setPart(int part) {
         this.part = part;
     }
 
@@ -22,4 +28,5 @@ public class AdventDate {
     public int part() {
         return part;
     }
+
 }

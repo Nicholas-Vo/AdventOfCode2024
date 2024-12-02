@@ -2,10 +2,12 @@ package main.java;
 
 import java.util.function.Supplier;
 
+/**
+ * Represents a day of the Advent of Code challenge
+ * @param <R>: The type of result returned (Long, String, etc.)
+ */
 public class AdventDay<R> {
-    private int year;
-    private int day;
-    private int part;
+    private AdventDate adventDate;
 
     private InputReader reader;
 
@@ -18,29 +20,20 @@ public class AdventDay<R> {
     }
 
     private void construct(int year, int day, boolean useTestFile) {
-        this.year = year;
-        this.day = day;
-
-        reader = new InputReader(new AdventDate(this.year, this.day, this.part), useTestFile);
+        adventDate = new AdventDate(year, day);
+        reader = new InputReader(this.adventDate, useTestFile);
     }
 
     public void doAnswer(int part, Supplier<R> action) {
-        this.part = part;
+        this.adventDate.setPart(part);
         R result = action.get();
 
         System.out.println(
-                "Result for day " + this.day + ", part " + this.part + ": " + result);
+                "Result for day " + this.adventDate.day() + ", part " + this.adventDate.part() + ": " + result);
     }
 
     public String[] getInputLines() {
         return reader.getInputLines();
     }
 
-    public int year() {
-        return year;
-    }
-
-    public int day() {
-        return day;
-    }
 }

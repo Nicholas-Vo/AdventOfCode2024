@@ -9,10 +9,10 @@ import java.util.stream.IntStream;
 public class Day01 {
 
     public static void main(String[] args) {
-        var adventDay = new AdventDay<Long>(2024, 1, /* Use test file */ true);
+        var adventDay = new AdventDay<Long>(2024, 1, /* Use test file */ false);
 
-        List<Long> left = new ArrayList<>();
-        List<Long> right = new ArrayList<>();
+        final List<Long> left = new ArrayList<>();
+        final List<Long> right = new ArrayList<>();
 
         final String[] inputLines = adventDay.getInputLines();
 
