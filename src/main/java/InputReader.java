@@ -9,10 +9,16 @@ import java.util.logging.Logger;
 public class InputReader {
     private static final Logger logger = Logger.getLogger(InputReader.class.getName());
     private String[] inputLines;
+    private final AdventDate date;
+    private boolean useTestfile;
 
-    public InputReader(int year, int day) {
+    public InputReader(AdventDate date, boolean useTestfile) {
         var classloader = Thread.currentThread().getContextClassLoader();
-        var fileName = "aoc-" + year + "-" + day + ".txt"; // aoc-2024-1
+
+        this.date = date;
+        this.useTestfile = useTestfile;
+
+        String fileName = getFileName();
 
         try (var inputStream = classloader.getResourceAsStream(fileName)) {
             if (inputStream == null) {
@@ -29,6 +35,14 @@ public class InputReader {
             }
         } catch (IOException e) {
             logger.log(Level.SEVERE, "Error reading the file.", e);
+        }
+    }
+
+    private String getFileName() {
+        if (this.useTestfile) {
+            return "aoc-" + this.date.year() + "-" + this.date.day() + "-test" + ".txt"; // aoc-2024-1
+        } else {
+            return "aoc-" + this.date.year() + "-" + this.date.day() + ".txt"; // aoc-2024-1
         }
     }
 
