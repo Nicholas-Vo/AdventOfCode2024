@@ -7,47 +7,41 @@ import java.util.Arrays;
 public class Day02 {
 
     public static void main(String[] args) {
-        var day2 = new AdventDay<Integer>(2024, 2, /* Use test file */ false);
+        var day2 = new AdventDay<Integer>(2024, 2, /* Use test file */ true);
         final String[] inputLines = day2.getInputLines();
 
         day2.doAnswer(/* part */ 1, () -> {
-            int sum = 0;
-            for (String report : inputLines) {
-                var isSafe = check(report, true);
-
-                if (day2.testing()) {
-                    System.out.print(" is " + (isSafe ? "safe!" : "unsafe!") + "\n");
-                }
-
-                if (isSafe) {
-                    sum++;
-                }
-            }
-
-            return sum;
+            return getSafeReportCount(day2, inputLines, 1);
         });
 
         day2.doAnswer(/* part */ 2, () -> {
-            int sum = 0;
-
-            for (String report : inputLines) {
-                var isSafe = check(report);
-
-                if (day2.testing()) {
-                    System.out.print(" is " + (isSafe ? "safe!" : "unsafe!") + "\n");
-                }
-
-                if (isSafe) {
-                    sum++;
-                }
-            }
-
-            return sum;
+            return getSafeReportCount(day2, inputLines, 2);
         });
     }
 
+    private static int getSafeReportCount(AdventDay<Integer> day, String[] inputLines, int part) {
+        int sum = 0;
+
+        for (String report : inputLines) {
+            var isSafe = checkReport(report, part);
+
+            if (day.testing()) {
+                System.out.print(" is " + (isSafe ? "safe!" : "unsafe!") + "\n");
+            }
+
+            if (isSafe) {
+                sum++;
+            }
+        }
+        return sum;
+    }
+
+    private static boolean checkReport(String report, int part) {
+        return part == 1 ? checkReportPart1(report) : checkReportPart2(report);
+    }
+
     /* part 1 */
-    private static boolean check(String report, boolean isPart1) {
+    private static boolean checkReportPart1(String report) {
         int[] nums = Arrays.stream(report.split(" ")).mapToInt(Integer::parseInt).toArray();
 
         int increasing = -1;
@@ -77,7 +71,7 @@ public class Day02 {
     }
 
     /* part 2 */
-    private static boolean check(String report) {
+    private static boolean checkReportPart2(String report) {
         int[] nums = Arrays.stream(report.split(" ")).mapToInt(Integer::parseInt).toArray();
 
         if (safe(nums)) {

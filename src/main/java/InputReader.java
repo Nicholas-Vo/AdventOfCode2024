@@ -10,8 +10,11 @@ public class InputReader {
 
     public InputReader(AdventDate date, boolean useTestFile) {
         // todo: this'll break after day 9, and it's ugly. make this better
-        final String path = "day0" + date.day() + "/aoc-" + date.year() + "-" + date.day();
-        final String fileName = useTestFile ? path + "-test" + ".txt" : path + ".txt";
+        //final String path = "day0" + date.day() + "/aoc-" + date.year() + "-" + date.day();
+        //final String fileName = useTestFile ? path + "-test" + ".txt" : path + ".txt";
+
+        // vscode/codespace friendly path
+        final String fileName = "main/resources/day02/aoc-2024-2-test.txt";
 
         try {
             var resource = this.getClass().getClassLoader().getResource(fileName);
@@ -21,7 +24,6 @@ public class InputReader {
         } catch (IOException | URISyntaxException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     public String[] getInputLines() {
