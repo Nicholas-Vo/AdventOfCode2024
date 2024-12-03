@@ -8,9 +8,10 @@ import java.nio.file.Paths;
 public class InputReader {
     private final String[] inputLines;
 
-    public InputReader(AdventDate date, boolean useTestfile) {
-        final String path = "aoc-" + date.year() + "-" + date.day();
-        final String fileName = useTestfile ? path + "-test" + ".txt" : path + ".txt";
+    public InputReader(AdventDate date, boolean useTestFile) {
+        // todo: this'll break after day 9, and it's ugly. make this better
+        final String path = "day0" + date.day() + "/aoc-" + date.year() + "-" + date.day();
+        final String fileName = useTestFile ? path + "-test" + ".txt" : path + ".txt";
 
         try {
             var resource = this.getClass().getClassLoader().getResource(fileName);

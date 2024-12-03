@@ -8,20 +8,21 @@ import java.util.function.Supplier;
  */
 public class AdventDay<R> {
     private AdventDate adventDate;
-
     private InputReader reader;
+    private boolean testing;
 
     public AdventDay(int year, int day) {
         construct(year, day, false);
     }
 
-    public AdventDay(int year, int day, boolean useTestFile) {
-        construct(year, day, useTestFile);
+    public AdventDay(int year, int day, boolean testing) {
+        construct(year, day, testing);
     }
 
-    private void construct(int year, int day, boolean useTestFile) {
+    private void construct(int year, int day, boolean testing) {
         adventDate = new AdventDate(year, day);
-        reader = new InputReader(this.adventDate, useTestFile);
+        reader = new InputReader(this.adventDate, testing);
+        this.testing = testing;
     }
 
     public void doAnswer(int part, Supplier<R> action) {
@@ -35,5 +36,7 @@ public class AdventDay<R> {
     public String[] getInputLines() {
         return reader.getInputLines();
     }
+
+    public boolean testing() { return this.testing; }
 
 }

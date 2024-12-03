@@ -9,12 +9,12 @@ import java.util.stream.IntStream;
 public class Day01 {
 
     public static void main(String[] args) {
-        var adventDay = new AdventDay<Long>(2024, 1, /* Use test file */ false);
+        var day1 = new AdventDay<Long>(2024, 1, /* Use test file */ false);
 
         final List<Long> left = new ArrayList<>();
         final List<Long> right = new ArrayList<>();
 
-        final String[] inputLines = adventDay.getInputLines();
+        final String[] inputLines = day1.getInputLines();
 
         for (String line : inputLines) {
             // Create a two-element pair; Example: [1205, 1931]
@@ -25,7 +25,7 @@ public class Day01 {
         }
 
         /* Day 1, part 1 */
-        adventDay.doAnswer(1, () -> {
+        day1.doAnswer(1, () -> {
             final List<Long> leftSorted = left.stream().sorted().toList();
             final List<Long> rightSorted = right.stream().sorted().toList();
 
@@ -38,7 +38,7 @@ public class Day01 {
         });
 
         /* Day 1, part 2 */
-        adventDay.doAnswer(2, () -> {
+        day1.doAnswer(2, () -> {
             long similarity = 0;
 
             for (long leftNum : left) {
