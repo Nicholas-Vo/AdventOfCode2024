@@ -17,21 +17,17 @@ public class Day04 {
             // horizontally
             for (String line : lines) {
                 sum += check(line); // Left/Right
-
-                var builder = new StringBuilder(line).reverse();
-                sum += check(builder.toString()); // Right/Left
             }
 
             // vertically
             int size = lines[0].length(); // Amount of columns
             for (int column = 0; column < size; column++) {
-                StringBuilder builder = new StringBuilder();
+                var builder = new StringBuilder();
                 for (String line : lines) {
                     builder.append(line.charAt(column));
                 }
 
                 sum += check(builder.toString());
-                sum += check(builder.reverse().toString());
             }
 
             return sum + diag1(lines) + diag2(lines);
@@ -49,7 +45,7 @@ public class Day04 {
 
         // Top-left to bottom-right?
         for (int start = 0; start < size + columns - 1; start++) {
-            StringBuilder builder = new StringBuilder();
+            var builder = new StringBuilder();
             for (int row = 0; row < size; row++) {
                 int column = start - row;
                 if (column >= 0 && column < columns) {
@@ -57,7 +53,6 @@ public class Day04 {
                 }
             }
             sum += check(builder.toString());
-            sum += check(builder.reverse().toString());
         }
         return sum;
     }
@@ -69,7 +64,7 @@ public class Day04 {
 
         // Top-right to bottom-left
         for (int start = 0; start < size + columns - 1; start++) {
-            StringBuilder builder = new StringBuilder();
+            var builder = new StringBuilder();
             for (int row = 0; row < size; row++) {
                 int column = start - (size - 1 - row);
                 if (column >= 0 && column < columns) {
@@ -77,13 +72,26 @@ public class Day04 {
                 }
             }
             sum += check(builder.toString());
-            sum += check(builder.reverse().toString());
         }
 
         return sum;
     }
 
+    /**
+     * Each line must be checked in each direction;
+     * this method reverses each line to do that
+     * @param line a line
+     * @return number of found XMAS strings
+     */
     private static long check(String line) {
+        return getMatches(line) + getMatches(
+                new StringBuilder(line)
+                        .reverse()
+                        .toString()
+        );
+    }
+
+    private static long getMatches(String line) {
         Matcher matcher = Pattern.compile("(?=XMAS)").matcher(line);
         long count = 0;
         while (matcher.find()) {
