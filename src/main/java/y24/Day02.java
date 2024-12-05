@@ -10,13 +10,9 @@ public class Day02 {
         var day2 = new AdventDay<Integer>(2024, 2, /* Use test file */ true);
         final String[] inputLines = day2.getInputLines();
 
-        day2.doAnswer(/* part */ 1, () -> {
-            return getSafeReportCount(day2, inputLines, 1);
-        });
+        day2.doAnswer(/* part */ 1, () -> getSafeReportCount(day2, inputLines, 1));
 
-        day2.doAnswer(/* part */ 2, () -> {
-            return getSafeReportCount(day2, inputLines, 2);
-        });
+        day2.doAnswer(/* part */ 2, () -> getSafeReportCount(day2, inputLines, 2));
     }
 
     private static int getSafeReportCount(AdventDay<Integer> day, String[] inputLines, int part) {

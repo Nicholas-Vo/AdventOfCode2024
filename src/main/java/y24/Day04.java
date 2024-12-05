@@ -1,89 +1,94 @@
 package main.java.y24;
 
-import java.util.Arrays;
-import java.util.regex.Pattern;
-import java.util.stream.Stream;
-
 import main.java.AdventDay;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class Day04 {
+
     public static void main(String[] args) {
-        var day3 = new AdventDay<Integer>(2024, 4, true);
-        // MMMSXXMASM
-        // MSAMXMSMSA
-        // AMXSXMAAMM
-        // MSAMASMSMX
-        // XMASAMXAMM
-        // XXAMMXXAMA
-        // SMSMSASXSS
-        // SAXAMASAAA
-        // MAMMMXMMMM
-        // MXMXAXMASX
-        final String[] linesLeftToRight = day3.getInputLines();
+        var day4 = new AdventDay<Long>(2024, 4, false);
+        String[] lines = day4.getInputLines();
 
-        char[] charsDown = getCharsDown(linesLeftToRight);
-        char[] charsUp = reverse(charsDown);
-        char[] charsRight = getCharsRight(linesLeftToRight);
-        char[] charsLeft = reverse(charsRight);
-        char[] charsDiagonalDownRight = diagonalDownRight(linesLeftToRight);
+        day4.doAnswer(1, () -> {
+            long sum = 0;
 
-        System.out.println("Chars down: " + Arrays.toString(charsDown));
-        System.out.println("Chars up:   " + Arrays.toString(charsUp));
-        System.out.println("Chars right:   " + Arrays.toString(charsRight));
-        System.out.println("Chars left:   " + Arrays.toString(charsLeft));
-        System.out.println("Chars diagonal down right:   " + Arrays.toString(charsDiagonalDownRight));
+            // horizontally
+            for (String line : lines) {
+                sum += check(line); // Left/Right
 
-        System.out.println("Matches in charsDiagonalDownRight: " + findMatches(charsDiagonalDownRight));
-    }
-
-    private static long findMatches(char[] array) {
-        String line = String.valueOf(array);
-        return Stream.of(Pattern.compile("XMAS"), Pattern.compile("SAMX"))
-                .flatMap(p -> p.matcher(line).results())
-                .count();
-    }
-
-    private static char[] getCharsRight(String[] linesLeftToRight) {
-        int size = linesLeftToRight.length;
-        char[] res = new char[size];
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                res[i] = linesLeftToRight[0].charAt(i);
+                var builder = new StringBuilder(line).reverse();
+                sum += check(builder.toString()); // Right/Left
             }
-        }
-        return res;
-    }
 
-    private static char[] getCharsDown(String[] linesLeftToRight) {
-        int size = linesLeftToRight.length;
-        char[] res = new char[size];
-        for (int i = 0; i < size; i++) {
-            res[i] = linesLeftToRight[i].charAt(0);
-        }
+            // vertically
+            int size = lines[0].length(); // Amount of columns
+            for (int column = 0; column < size; column++) {
+                StringBuilder builder = new StringBuilder();
+                for (String line : lines) {
+                    builder.append(line.charAt(column));
+                }
 
-        return res;
-    }
-
-    private static char[] diagonalDownRight(String[] inputLinesLeftToRight) {
-        int size = inputLinesLeftToRight.length;
-        char[] res = new char[size];
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                res[i] = inputLinesLeftToRight[i].charAt(i);
+                sum += check(builder.toString());
+                sum += check(builder.reverse().toString());
             }
-        }
-        return res;
+
+            return sum + diag1(lines) + diag2(lines);
+        });
+
+        day4.doAnswer(2, () -> {
+            return -1L;
+        });
     }
 
-    private static char[] reverse(char[] inputArr) {
-        int size = inputArr.length;
-        char[] reversed = new char[size];
+    private static long diag1(String[] lines) {
+        int columns = lines[0].length();
+        int size = lines.length;
+        long sum = 0;
 
-        int startIndex = size - 1; // Starting index
-        for (int i = startIndex; i >= 0; i--) {
-            reversed[startIndex - i] = inputArr[i];
+        // Top-left to bottom-right?
+        for (int start = 0; start < size + columns - 1; start++) {
+            StringBuilder builder = new StringBuilder();
+            for (int row = 0; row < size; row++) {
+                int column = start - row;
+                if (column >= 0 && column < columns) {
+                    builder.append(lines[row].charAt(column));
+                }
+            }
+            sum += check(builder.toString());
+            sum += check(builder.reverse().toString());
+        }
+        return sum;
+    }
+
+    private static long diag2(String[] lines) {
+        int columns = lines[0].length();
+        int size = lines.length;
+        long sum = 0;
+
+        // Top-right to bottom-left
+        for (int start = 0; start < size + columns - 1; start++) {
+            StringBuilder builder = new StringBuilder();
+            for (int row = 0; row < size; row++) {
+                int column = start - (size - 1 - row);
+                if (column >= 0 && column < columns) {
+                    builder.append(lines[row].charAt(column));
+                }
+            }
+            sum += check(builder.toString());
+            sum += check(builder.reverse().toString());
         }
 
-        return reversed;
+        return sum;
+    }
+
+    private static long check(String line) {
+        Matcher matcher = Pattern.compile("(?=XMAS)").matcher(line);
+        long count = 0;
+        while (matcher.find()) {
+            count++;
+        }
+        return count;
     }
 }

@@ -1,5 +1,6 @@
 package main.java;
 
+import java.util.Objects;
 import java.util.function.Supplier;
 
 /**
@@ -28,6 +29,10 @@ public class AdventDay<R> {
     public void doAnswer(int part, Supplier<R> action) {
         this.adventDate.setPart(part);
         R result = action.get();
+
+        if (Objects.equals(result.toString(), "-1")) {
+            return;
+        }
 
         System.out.println(
                 "Result for day " + this.adventDate.day() + ", part " + this.adventDate.part() + ": " + result);
