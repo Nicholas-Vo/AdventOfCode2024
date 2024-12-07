@@ -58,14 +58,15 @@ public class Day05 {
     // pages = [75,47,61,53,29]
     private static boolean isValidUpdate(int[] pages) {
         for (int i = 0; i < pages.length; i++) {
-            var current = pages[i];
-            var disallowed = ruleMap.get(current);
-
-            if (disallowed == null) continue;
+            var currentPage = pages[i];
+            var disallowed = ruleMap.get(currentPage);
+            if (disallowed == null) {
+                continue;
+            }
 
             for (int j = 0; j < i; j++) {
-                int previous = pages[j];
-                if (disallowed.contains(previous)) {
+                int previousPage = pages[j];
+                if (disallowed.contains(previousPage)) {
                     return false;
                 }
             }
@@ -73,20 +74,5 @@ public class Day05 {
         return true;
     }
 
-    private static void print(Set<Integer> set) {
-        set.forEach(e -> System.out.println(e));
-    }
-
-    private static void print(String[] array) {
-        for (var aString : array) {
-            System.out.println(aString);
-        }
-    }
-
-    private static void print(int[] array) {
-        for (var aString : array) {
-            System.out.print(aString + " ");
-        }
-    }
 }
 
