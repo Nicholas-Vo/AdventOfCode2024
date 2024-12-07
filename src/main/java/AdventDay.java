@@ -42,6 +42,10 @@ public class AdventDay<R> {
         return reader.getInputLines();
     }
 
+    public String getInput() {
+        return reader.getInput();
+    }
+
     public boolean testing() { return this.testing; }
 
 }

@@ -60,7 +60,7 @@ public class Day04 {
                         sum++;
                     }
 
-                    System.out.println("A #" + ++whatAWeAt + " Is X: " + x + "\n");
+                    //System.out.println("A #" + ++whatAWeAt + " Is X: " + x + "\n");
                 }
             }
             return sum;

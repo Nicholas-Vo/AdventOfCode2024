@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 
 public class InputReader {
     private final String[] inputLines;
+    private final String input;
 
     public InputReader(AdventDate date, boolean useTestFile) {
         // todo: this'll break after day 9, and it's ugly. make this better
@@ -18,9 +19,11 @@ public class InputReader {
 
         try {
             var resource = this.getClass().getClassLoader().getResource(fileName);
-            var file = Files.readAllLines(Paths.get(resource.toURI()));
+            var p = Paths.get(resource.toURI());
+            var file = Files.readAllLines(p);
 
             inputLines = file.toArray(new String[0]);
+            input = Files.readString(p);
         } catch (IOException | URISyntaxException e) {
             throw new RuntimeException(e);
         }
@@ -28,6 +31,10 @@ public class InputReader {
 
     public String[] getInputLines() {
         return inputLines;
+    }
+
+    public String getInput() {
+        return input;
     }
 
 }
