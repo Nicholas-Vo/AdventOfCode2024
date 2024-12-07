@@ -53,7 +53,6 @@ public class Day05 {
         });
     }
 
-    // X|Y = Page number X must be printed before Y
     // rule = 47|53
     // pages = [75,47,61,53,29]
     private static boolean isValidUpdate(int[] pages) {
