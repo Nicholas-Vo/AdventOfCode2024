@@ -41,8 +41,8 @@ public class Day05 {
                         .toArray();
 
                 if (!isValidUpdate(pages)) {
-                    int[] sorted = sortPages(pages);
-                    sum += sorted[sorted.length / 2];
+                    var sorted = sortPages(pages);
+                    sum += sorted.get(sorted.size() / 2);
                 }
             }
 
@@ -50,7 +50,7 @@ public class Day05 {
         });
     }
 
-    private static int[] sortPages(int[] pages) {
+    private static List<Integer> sortPages(int[] pages) {
         Integer[] sortedPages = Arrays.stream(pages).boxed().toArray(Integer[]::new);
 
         Arrays.sort(sortedPages, (a, b) -> {
@@ -68,7 +68,7 @@ public class Day05 {
             return 0;
         });
 
-        return Arrays.stream(sortedPages).mapToInt(i -> i).toArray();
+        return Arrays.stream(sortedPages).toList();
     }
 
     private static String[] getUpdateList(String[] ruleList, String updates) {
